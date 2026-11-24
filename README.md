@@ -1,6 +1,9 @@
 # Lonpos 2D
-
 A browser-based 2D puzzle game inspired by Lonpos, built with HTML, CSS, and JavaScript.
+
+![Gameplay](images/gameplay1.png)
+![Gameplay](images/gameplay2.png)
+
 
 ## About
 
