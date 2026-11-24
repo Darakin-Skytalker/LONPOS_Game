@@ -1,0 +1,201 @@
+/* style.css: styles for the puzzle game page.
+   Layout: a title, the board (11 x 5 grid), the tray of loose pieces, a
+   reset button, and a full-width "win" banner that fades in and out.
+   Sizes: every cell is 70px with a 2px gap, which ui.js relies on
+   (it positions placed pieces in steps of 72px). */
+
+/* ---------- Page basics ---------- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: cyan;
+}
+
+h1 {
+    font-size: 50px;
+    text-align: center;
+}
+h4{
+    margin:4px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Centered column holding the board, the tray and the button */
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+}
+
+
+/* ---------- Board ---------- */
+/* 11 columns x 5 rows of 70px cells. position: relative makes the board
+   the reference point for pieces placed on it with position: absolute. */
+.board {
+    display: grid;
+    grid-template-columns: repeat(11, 70px);
+    grid-template-rows: repeat(5, 70px);
+    gap: 2px;
+    position: relative;
+    border: 4px solid rgb(30, 30, 30);
+}
+
+/* One empty square of the board */
+.cell {
+    width: 70px;
+    height: 70px;
+    background-color: rgb(225, 219, 219);
+    box-sizing: border-box;
+    border: 2px solid rgb(31, 30, 30);
+}
+
+/* ---------- Pieces ---------- */
+/* The tray where loose pieces wait; wraps onto several lines */
+.pieces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+
+}
+
+/* One piece (a small grid of squares). z-index keeps it above the board
+   while dragging; touch-action: none stops the browser from scrolling the
+   page when a finger drags a piece. */
+.piece {
+    gap: 2px;
+    z-index: 1;
+    touch-action: none;
+    border-color: black;
+}
+
+/* One square of a piece. The default colour is red; the rules further down
+   override it per piece. */
+.piece-cell {
+    width: 70px;
+    height: 70px;
+    background-color: red;
+    border: 1px solid white;
+    box-sizing: border-box;
+    border: 5px solid black;   /* this later border overrides the white one above */
+}
+
+/* ---------- Reset button ---------- */
+.reset-button {
+    margin: 20px;
+    padding: 12px 30px;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: #f30f0f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.reset-button:hover {
+    background-color: rgb(240, 46, 46);
+}
+
+/* ---------- Piece colours ---------- */
+/* ui.js stores each piece's id in data-piece-id; one rule per piece */
+.piece[data-piece-id="1"] .piece-cell {
+    background-color: Orange;
+}
+
+.piece[data-piece-id="2"] .piece-cell {
+    background-color: Yellow;
+}
+
+.piece[data-piece-id="3"] .piece-cell {
+    background-color: Blue;
+}
+
+.piece[data-piece-id="4"] .piece-cell {
+    background-color: Green;
+}
+
+.piece[data-piece-id="5"] .piece-cell {
+    background-color: Purple;
+}
+
+.piece[data-piece-id="6"] .piece-cell {
+    background-color: Brown;
+}
+
+.piece[data-piece-id="7"] .piece-cell {
+    background-color: rgb(169, 56, 120);
+}
+
+.piece[data-piece-id="8"] .piece-cell {
+    background-color: Black;
+}
+
+.piece[data-piece-id="9"] .piece-cell {
+    background-color: White;
+}
+
+.piece[data-piece-id="10"] .piece-cell {
+    background-color: Gray;
+}
+
+.piece[data-piece-id="11"] .piece-cell {
+    background-color: gold;
+}
+
+.piece[data-piece-id="12"] .piece-cell {
+    background-color: Red;
+}
+
+/* ---------- Win message ---------- */
+/* Full-width banner centered on the screen. It is invisible (opacity: 0)
+   and ignores clicks (pointer-events: none) until the "show" class is
+   added by ui.js. */
+.win-message {
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    text-align: center;
+    font-size: 150px;
+    font-weight: bold;
+    color: Yellow;
+    background-color: black;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Fade in (0-30%), stay visible (30-70%), fade out (70-100%) */
+@keyframes winAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Plays the 6 second animation; "forwards" keeps the final state (hidden)
+   afterwards */
+.win-message.show {
+    animation: winAnimation 6s ease-in-out forwards;
+}
+
+
